@@ -1,6 +1,8 @@
 #include "Group.h"
 #include <iostream>
-#include <stdexcept>
+#include <boost/program_options.hpp>
+
+//#include <stdexcept>
 
 Group::Group(std::string _title, std::string _spec) {
 	title = _title;
@@ -10,13 +12,14 @@ Group::Group(std::string _title, std::string _spec) {
 
 Group::~Group() {
 	std::cout << "Группа " << title << " " << spec << " расформирована" << "\n";
-	for (auto student : students) {
+	for (Student* student : students) {
 		delete student;
 	}
 }
 
 void Group::addStudent(Student* _student) {
 	students.push_back(_student);
+	_student->group = this;
 }
 
 void Group::chooseHead() {
@@ -70,6 +73,10 @@ std::string Group::getTitle() const{
 
 std::string Group::getSpec() const{
 	return spec;
+}
+
+Student* Group::getHead() const {
+	return head;
 }
 
 int Group::getGroupSize() const{

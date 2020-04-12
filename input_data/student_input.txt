@@ -1,0 +1,10 @@
+01;Yershov Abram Robertovich;18-pi;pi;
+02;Kudryavtsev Oleg Borisovich;18-pi;pi;
+03;Guriev Willie Parfenovich;18-pmi;pmi;
+04;Yershov Igor Bogdanovich;18-fm;fm;
+05;Biryukov Khariton Nikolaevich;18-bi;bi;
+06;Safonov David Efimovich;18-fm;fm;
+07;Arseniy Mironovich Gerasimov;18-pmi;pmi;
+08;Yakushev Valentin Makarovich;18-pi;pi;
+09;Blokhin Nelly Efimovich;18-bi;bi;
+10;Yaroslav Nikitovich Shiryaev;18-bi;bi;

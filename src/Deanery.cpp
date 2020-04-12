@@ -3,8 +3,10 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <boost/program_options.hpp>
 
-static int tableSize = 90;
+
+static 	int tableSize = 90;
 
 std::vector<std::string> split(std::string&s, char separator) {
 	std::vector<std::string>tokens;
@@ -48,7 +50,7 @@ void Deanery::loadStudentsFromFile(std::string _filename) {
 			groups[student_group] = newGroup;
 		}
 		if (groups[student_group]->findStudent(student_id, student_fio) != nullptr)continue;
-		Student* newStudent = new Student(student_id, student_fio, groups[student_group]);
+		Student* newStudent = new Student(student_id, student_fio);
 		for (int i = 4; i < tokens.size(); i++) {
 			int student_mark = stoi(tokens[i]);
 			newStudent->addMark(student_mark);
@@ -68,7 +70,7 @@ void Deanery::addRandomMarks(int _number) {
 	}
 }
 
-void Deanery::getStatistics() {
+void Deanery::getStatistics() const{
 	for (int i = 0; i < tableSize; i++) {
 		std::cout << "-";
 	}
@@ -89,6 +91,10 @@ void Deanery::getStatistics() {
 		}
 		std::cout << group->meanGroupMark() << '\n';
 	}
+}
+
+int Deanery::getSize() const {
+	return groups.size();
 }
 
 void Deanery::transfer(Student* _student, Group* _from, Group* _to) {
@@ -124,7 +130,7 @@ void Deanery::saveToFile(std::string _filename) {
 	for (auto temp : groups) {
 		Group* group = temp.second;
 		for (Student* student : group->students) {
-			out << student->id << ";" << student->fio << ";" << student->group << ";" << student->group->spec << ";";
+			out << student->id << ";" << student->fio << ";" << student->group->title << ";" << student->group->spec << ";";
 			for (int mark : student->marks) {
 				out << mark << ";";
 			}
@@ -191,4 +197,14 @@ std::vector<std::string> Deanery::getGroupTitles() const{
 		list.push_back(temp.first);
 	}
 	return list;
+}
+
+void Deanery::addGroup(Group* group, bool force) {
+	if (groups.count(group->title) == 0) {
+		groups[group->title] = group;
+	}
+	else if (force && groups[group->title] != group) {
+		delete groups[group->title];
+		groups[group->title] = group;
+	}
 }

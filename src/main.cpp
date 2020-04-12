@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <iomanip>
+//#include <filesystem>
 #include "Deanery.h"
 #include "Student.h"
 #include "Group.h"
@@ -13,9 +14,10 @@ using namespace std;
 
 int main() {
 	system("chcp 1251");
+	//cout << filesystem::current_path() << '\n';
 	Deanery dean;
-	dean.loadGroupsFromFile("group_input.txt");
-	dean.loadStudentsFromFile("student_input.txt");
+	//dean.loadGroupsFromFile("group_input.txt");
+	dean.loadStudentsFromFile("/input_data/student_input.txt");
 	dean.chooseHeads();
 	dean.addRandomMarks(3);
 	dean.print();

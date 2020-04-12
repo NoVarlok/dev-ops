@@ -1,45 +1,54 @@
+# Сборка ---------------------------------------
+
+# В качестве базового образа для сборки используем gcc:latest
 FROM gcc:latest as build
 
-MAINTAINER User "https://github.com/HSE-NN-SE/devops-18pi-NoVarlok"
+# Установим рабочую директорию для сборки GoogleTest
+WORKDIR /gtest_build
 
-# RUN locale-gen en_US.UTF-8
-# RUN update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX
-
-WORKDIR /build
-
-# download packages
+# Скачаем все необходимые пакеты и выполним сборку GoogleTest
+# Такая длинная команда обусловлена тем, что
+# Docker на каждый RUN порождает отдельный слой,
+# Влекущий за собой, в данном случае, ненужный оверхед
 RUN apt-get update && \
     apt-get install -y \
-      cmake
+      libboost-dev libboost-program-options-dev \
+      libgtest-dev \
+      cmake \
+    && \
+    cmake -DCMAKE_BUILD_TYPE=Release /usr/src/gtest && \
+    cmake --build . && \
+    mv lib*.a /usr/lib
 
-# copy directory /src into container
+# Скопируем директорию /src в контейнер
 ADD ./src /app/src
 ADD ./include /app/src
 ADD ./cmake /app/src
+ADD ./test /app/src
 
-# build directory set up
+# Установим рабочую директорию для сборки проекта
 WORKDIR /app/build
 
-# project build
+# Выполним сборку нашего проекта, а также его тестирование
 RUN cmake ../src && \
-    cmake --build .
+    cmake --build . && \
+    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
 
-# run ---------------------------------------
+# Запуск ---------------------------------------
 
-# use ubuntu:latest
+# В качестве базового образа используем ubuntu:latest
 FROM ubuntu:latest
 
-# add user
+# Добавим пользователя, потому как в Docker по умолчанию используется root
+# Запускать незнакомое приложение под root'ом неприлично :)
 RUN groupadd -r sample && useradd -r -g sample sample
 USER sample
 
-# set up workdir
+# Установим рабочую директорию нашего приложения
 WORKDIR /app
 
-# copy app into workdir
-COPY --from=build /app/build/project_app .
-# COPY ./src/student_input.txt /app/build/student_input.txt
-# COPY ./src/group_input.txt /app/build/student_input.txt
+# Скопируем приложение со сборочного контейнера в рабочую директорию
+COPY --from=build /app/build/hello_world_app .
 
-# set up entry point
-ENTRYPOINT ["./project_app"]
+# Установим точку входа
+ENTRYPOINT ["./hello_world_app"]

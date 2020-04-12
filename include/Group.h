@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Student.h"
+#include "Group.h"
 
 class Group
 {
@@ -21,6 +22,7 @@ public:
 	void deduct(Student* _student, Group* _transferGroup = nullptr);
 	std::string getTitle() const;
 	std::string getSpec() const;
+	Student* getHead() const;
 	int getGroupSize() const;
 	std::vector<std::pair<int, std::string>>getStudentsList() const;
 	friend class Deanery;
