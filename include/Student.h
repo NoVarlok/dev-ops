@@ -3,8 +3,9 @@
 
 #include <string>
 #include <vector>
+//#include "Group.h"
 
-extern class Group;
+class Group;
 
 class Student
 {
@@ -22,8 +23,10 @@ public:
 	double meanMark();
 
 	int getId();
+	Group* getGroup();
 	std::string getFio();
 	std::vector<int> getMarks();
+	std::vector<std::string>getStatistics();
 
 	friend class Group;
 	friend class Deanery;
