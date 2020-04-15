@@ -48,7 +48,7 @@ USER sample
 WORKDIR /app
 
 # Скопируем приложение со сборочного контейнера в рабочую директорию
-COPY --from=build /app/build/hello_world_app .
+COPY --from=build /app/build/deanery_app .
 
 # Установим точку входа
-ENTRYPOINT ["./hello_world_app"]
+ENTRYPOINT ["./deanery_app"]
