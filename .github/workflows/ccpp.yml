@@ -1,0 +1,53 @@
+name: BlessRNG
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # - name: dir
+    - uses: actions/checkout@v2
+    - run: echo $PWD
+    - run: ls -la
+    - run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
+    - run: docker run -v /home/runner/work/devops-18pi-NoVarlok/devops-18pi-NoVarlok/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install cpplint
+    - name: code style check
+      run: |
+        cpplint --verbose=6 include/Deanery.h
+        cpplint --verbose=6 include/Group.h
+        cpplint --verbose=6 include/Student.h
+        cpplint --verbose=6 src/Deanery.cpp
+        cpplint --verbose=6 src/Group.cpp
+        cpplint --verbose=6 src/Student.cpp
+        cpplint --verbose=6 src/main.cpp
+        cpplint --verbose=6 test/test.cpp
+    - name: upload
+      run: |
+        echo ${{ secrets.DOCKER_LOGIN }}
+        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+        docker push 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER
+        
+#        python cpplint 
+#     - name: configure
+#       run: ./configure
+#     - name: make
+#       run: make
+#     - name: make check
+#       run: make check
+#     - name: make distcheck
+#       run: make distcheck
