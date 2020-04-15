@@ -28,14 +28,14 @@ jobs:
         pip install cpplint
     - name: code style check
       run: |
-        cpplint --verbose=6 include/Deanery.h
-        cpplint --verbose=6 include/Group.h
-        cpplint --verbose=6 include/Student.h
-        cpplint --verbose=6 src/Deanery.cpp
-        cpplint --verbose=6 src/Group.cpp
-        cpplint --verbose=6 src/Student.cpp
-        cpplint --verbose=6 src/main.cpp
-        cpplint --verbose=6 test/test.cpp
+        cpplint --verbose=2 include/Deanery.h
+        cpplint --verbose=2 include/Group.h
+        cpplint --verbose=2 include/Student.h
+        cpplint --verbose=2 src/Deanery.cpp
+        cpplint --verbose=2 src/Group.cpp
+        cpplint --verbose=2 src/Student.cpp
+        cpplint --verbose=2 src/main.cpp
+        cpplint --verbose=2 test/test.cpp
     - name: upload
       run: |
         echo ${{ secrets.DOCKER_LOGIN }}

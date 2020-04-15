@@ -1,22 +1,22 @@
-#ifndef STUDENT_H
-#define STUDENT_H
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
+#pragma once
 
 #include <string>
 #include <vector>
-//#include "Group.h"
 
 class Group;
 
-class Student
-{
+class Student{
 	int id;
 	std::string fio;
 	Group * group;
 	std::vector<int> marks;
 
 
-public:
-	Student(int _id, std::string _fio, Group* _group=nullptr);
+ public:
+	Student(int _id, std::string _fio, Group* _group = nullptr);
 	~Student();
 	void  addToGroup(Group* _group);
 	void addMark(int _mark);
@@ -31,5 +31,3 @@ public:
 	friend class Group;
 	friend class Deanery;
 };
-
-#endif // !STUDENT_H
