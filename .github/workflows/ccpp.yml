@@ -17,8 +17,8 @@ jobs:
     - run: echo $PWD
     - name: tests
       run: |
-        cp ./include ./docker_test/include
-        cp ./src ./docker_test/src
+        cp -r ./include ./docker_test/include
+        cp -r ./src ./docker_test/src
         cd docker_test
         docker build -t tests
         cd ..
