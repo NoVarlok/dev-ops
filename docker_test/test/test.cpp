@@ -15,7 +15,7 @@ TEST(TestStudent, StudentGetIdCheck) {
 	student1->addMark(1);
 	group1->chooseHead();
 	std::vector<int>marks = { 5, 4, 1 };
-	EXPECT_EQ(student1->getId(), 1);
+	EXPECT_EQ(student1->getId(), 2);
 }
 TEST(TestStudent, StudentGetFioCheck) {
 	Deanery deanery1;
