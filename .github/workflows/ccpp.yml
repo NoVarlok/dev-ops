@@ -22,10 +22,6 @@ jobs:
         cd docker_test
         docker build -t tests .
         cd ..
-    - name: build
-      run: |
-        docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
-        docker run -v /home/runner/work/devops-18pi-NoVarlok/devops-18pi-NoVarlok/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -44,6 +40,10 @@ jobs:
         cpplint --verbose=2 src/Student.cpp
         cpplint --verbose=2 src/main.cpp
         cpplint --verbose=2 test/test.cpp
+    - name: build
+      run: |
+        docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
+        docker run -v /home/runner/work/devops-18pi-NoVarlok/devops-18pi-NoVarlok/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
     - name: upload
       run: |
         echo ${{ secrets.DOCKER_LOGIN }}
