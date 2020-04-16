@@ -15,13 +15,6 @@ jobs:
     # - name: dir
     - uses: actions/checkout@v2
     - run: echo $PWD
-    - name: tests
-      run: |
-        cp -r ./include ./docker_test/include
-        cp -r ./src ./docker_test/src
-        cd docker_test
-        docker build -t tests .
-        cd ..
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -38,7 +31,14 @@ jobs:
         cpplint --verbose=2 src/Deanery.cpp
         cpplint --verbose=2 src/Group.cpp
         cpplint --verbose=2 src/Student.cpp
-        cpplint --verbose=0 src/main.cpp
+        cpplint --verbose=2 src/main.cpp
+    - name: tests
+      run: |
+        cp -r ./include ./docker_test/include
+        cp -r ./src ./docker_test/src
+        cd docker_test
+        docker build -t tests .
+        cd ..
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - name: run
