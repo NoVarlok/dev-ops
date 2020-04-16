@@ -25,4 +25,4 @@ include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(deanery_test test.cpp Student.h Group.h Deanery.h Student.cpp Group.cpp Deanery.cpp)
 target_link_libraries(deanery_test ${GTEST_LIBRARIES} pthread)
 
-add_test(NAME DeaneryTest COMMAND deanery_test)
+add_test(UnitTests deanery_test)
