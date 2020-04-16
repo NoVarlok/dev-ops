@@ -33,22 +33,3 @@ WORKDIR /app/build
 RUN cmake ../src && \
     cmake --build . && \
     CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
-
-# Запуск ---------------------------------------
-
-# В качестве базового образа используем ubuntu:latest
-FROM ubuntu:latest
-
-# Добавим пользователя, потому как в Docker по умолчанию используется root
-# Запускать незнакомое приложение под root'ом неприлично :)
-RUN groupadd -r sample && useradd -r -g sample sample
-USER sample
-
-# Установим рабочую директорию нашего приложения
-WORKDIR /app
-
-# Скопируем приложение со сборочного контейнера в рабочую директорию
-COPY --from=build /app/build/deanery_app .
-
-# Установим точку входа
-ENTRYPOINT ["./deanery_app"]
