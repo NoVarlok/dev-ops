@@ -22,7 +22,8 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # исполняемый файл тестов
-add_executable(deanery_test test.cpp Student.h Group.h Deanery.h Student.cpp Group.cpp Deanery.cpp)
-target_link_libraries(deanery_test ${GTEST_LIBRARIES} pthread)
+add_executable(runUnitTests test.cpp Student.h Group.h Deanery.h Student.cpp Group.cpp Deanery.cpp)
+target_link_libraries(runUnitTests ${GTEST_LIBRARIES} pthread)
+target_link_libraries(runUnitTests ${Boost_LIBRARIES})
 
-add_test(UnitTests deanery_test)
+add_test(UnitTests runUnitTests)
