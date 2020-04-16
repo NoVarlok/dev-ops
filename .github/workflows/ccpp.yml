@@ -15,7 +15,14 @@ jobs:
     # - name: dir
     - uses: actions/checkout@v2
     - run: echo $PWD
-    - run: ls -la
+    - name: tests
+      run: | 
+        cp ./include ./docker_test/include
+        cp ./src ./docker_test/src
+        cd docker_test
+        docker build -t tests
+        cd ..
+    - name: build
     - run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - run: docker run -v /home/runner/work/devops-18pi-NoVarlok/devops-18pi-NoVarlok/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
     - name: Set up Python ${{ matrix.python-version }}
