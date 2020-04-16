@@ -25,7 +25,7 @@ jobs:
         pip install cpplint
     - name: code style check
       run: |
-        cpplint --verbose=0 include/Deanery.h
+        cpplint --verbose=2 include/Deanery.h
         cpplint --verbose=2 include/Group.h
         cpplint --verbose=2 include/Student.h
         cpplint --verbose=2 src/Deanery.cpp
