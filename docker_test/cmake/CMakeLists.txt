@@ -13,3 +13,16 @@ include_directories(${BOOST_INCLUDE_DIRS})
 # исполняемый файл нашего приложения
 add_executable(deanery_app main.cpp Student.h Group.h Deanery.h Student.cpp Group.cpp Deanery.cpp)
 target_link_libraries(deanery_app ${Boost_LIBRARIES})
+
+# включаем CTest
+enable_testing()
+
+# в качестве фреймворка для тестирования используем GoogleTest
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+# исполняемый файл тестов
+add_executable(deanery_test test.cpp Student.h Group.h Deanery.h Student.cpp Group.cpp Deanery.cpp)
+target_link_libraries(deanery_test ${GTEST_LIBRARIES} pthread)
+
+add_test(NAME DeaneryTest COMMAND deanery_test)
