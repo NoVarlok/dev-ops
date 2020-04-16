@@ -20,7 +20,7 @@ jobs:
         cp -r ./include ./docker_test/include
         cp -r ./src ./docker_test/src
         cd docker_test
-        docker build -t tests
+        docker build -t tests .
         cd ..
     - name: build
       run: |
