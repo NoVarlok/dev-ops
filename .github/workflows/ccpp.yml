@@ -38,8 +38,7 @@ jobs:
         cpplint --verbose=2 src/Deanery.cpp
         cpplint --verbose=2 src/Group.cpp
         cpplint --verbose=2 src/Student.cpp
-        cpplint --verbose=2 src/main.cpp
-        cpplint --verbose=1 test/test.cpp
+        cpplint --verbose=0 src/main.cpp
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - name: run
