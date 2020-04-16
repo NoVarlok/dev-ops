@@ -15,8 +15,8 @@ jobs:
     # - name: dir
     - uses: actions/checkout@v2
     - run: echo $PWD
-    - name: tests
-      run: | 
+    # - name: tests
+    - run: | 
         cp ./include ./docker_test/include
         cp ./src ./docker_test/src
         cd docker_test
