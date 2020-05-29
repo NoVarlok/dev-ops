@@ -1,3 +1,6 @@
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
 #include "Deanery.h"
 #include <fstream>
 #include <sstream>
@@ -6,9 +9,9 @@
 #include <boost/program_options.hpp>
 
 
-static 	int tableSize = 90;
+static const int tableSize = 90;
 
-std::vector<std::string> split(std::string&s, char separator) {
+std::vector<std::string> split(const std::string&s, char separator) {
 	std::vector<std::string>tokens;
 	std::istringstream split_stream(s);
 	std::string string_part;
@@ -49,7 +52,9 @@ void Deanery::loadStudentsFromFile(std::string _filename) {
 			Group* newGroup = new Group(student_group, student_spec);
 			groups[student_group] = newGroup;
 		}
-		if (groups[student_group]->findStudent(student_id, student_fio) != nullptr)continue;
+		if (groups[student_group]->findStudent(student_id, student_fio) != nullptr) {
+			continue;
+		}
 		Student* newStudent = new Student(student_id, student_fio);
 		for (int i = 4; i < tokens.size(); i++) {
 			int student_mark = stoi(tokens[i]);
@@ -70,24 +75,30 @@ void Deanery::addRandomMarks(int _number) {
 	}
 }
 
-void Deanery::getStatistics() const{
+void Deanery::getStatistics() const {
 	for (int i = 0; i < tableSize; i++) {
 		std::cout << "-";
 	}
 	std::cout << '\n';
-	std::cout << std::setw(15) << "group title" << " | " << std::setw(10) << "group spec" << " | " << std::setw(10) << "head id" << " | " << std::setw(30) << "head fio" << " | " << "mean mark" << '\n';
+	std::cout << std::setw(15) << "group title" << " | ";
+	std::cout << std::setw(10) << "group spec" << " | ";
+	std::cout << std::setw(10) << "head id" << " | ";
+	std::cout << std::setw(30) << "head fio" << " | ";
+	std::cout << "mean mark" << '\n';
 	for (int i = 0; i < tableSize; i++) {
 		std::cout << "-";
 	}
 	std::cout << '\n';
 	for (auto temp : groups) {
 		Group* group = temp.second;
-		std::cout << std::setw(15) << group->title << " | " << std::setw(10) << group->spec << " | ";
+		std::cout << std::setw(15) << group->title;
+		std::cout << " | " << std::setw(10) << group->spec << " | ";
 		if (group->head == nullptr) {
-			std::cout << std::setw(10) << "undefined" << " | " << std::setw(30) << "undefined" << " | ";
-		}
-		else {
-			std::cout << std::setw(10) << group->head->id << " | " << std::setw(30) << group->head->fio << " | ";
+			std::cout << std::setw(10) << "undefined";
+			std::cout << " | " << std::setw(30) << "undefined" << " | ";
+		} else {
+			std::cout << std::setw(10) << group->head->id;
+			std::cout << " | " << std::setw(30) << group->head->fio << " | ";
 		}
 		std::cout << group->meanGroupMark() << '\n';
 	}
@@ -99,10 +110,7 @@ int Deanery::getSize() const {
 
 void Deanery::transfer(Student* _student, Group* _from, Group* _to) {
 	_from->deduct(_student, _to);
-	//if (_from->head == _student) {
-	//	_from->chooseHead();
-	//}
-	_to->addStudent(_student);	
+	_to->addStudent(_student);
 }
 
 void Deanery::dismissal(int _number) {
@@ -130,7 +138,9 @@ void Deanery::saveToFile(std::string _filename) {
 	for (auto temp : groups) {
 		Group* group = temp.second;
 		for (Student* student : group->students) {
-			out << student->id << ";" << student->fio << ";" << student->group->title << ";" << student->group->spec << ";";
+			out << student->id << ";" << student->fio;
+			out << ";" << student->group->title;
+			out << ";" << student->group->spec << ";";
 			for (int mark : student->marks) {
 				out << mark << ";";
 			}
@@ -147,7 +157,7 @@ void Deanery::chooseHeads() {
 }
 
 void Deanery::print() {
-	std::cout << "Список деканата" << '\n';
+	std::cout << "Deanery list" << '\n';
 	for (auto temp : groups) {
 		Group* group = temp.second;
 		for (int i = 0; i < tableSize; i++) {
@@ -159,9 +169,15 @@ void Deanery::print() {
 			std::cout << "-";
 		}
 		std::cout << '\n';
-		std::cout << std::setw(3) << "id" << " | " << std::setw(30) << "FIO" << " | " << std::setw(15) << "group title" << " | " << std::setw(10) << "group spec" << " | " << std::setw(5) << "marks" << '\n';
+		std::cout << std::setw(3) << "id" << " | " << std::setw(30) << "FIO";
+		std::cout << " | " << std::setw(15) << "group title" << " | ";
+		std::cout << std::setw(10) << "group spec" << " | ";
+		std::cout  << std::setw(5) << "marks" << '\n';
 		for (Student* student : group->students) {
-			std::cout << std::setw(3) << student->id << " | " << std::setw(30) << student->fio << " | " << std::setw(15) << group->title << " | " << std::setw(10) << group->spec << " | ";
+			std::cout << std::setw(3) << student->id << " | ";
+			std::cout << std::setw(30) << student->fio << " | ";
+			std::cout << std::setw(15) << group->title << " | ";
+			std::cout << std::setw(10) << group->spec << " | ";
 			for (int mark : student->marks) {
 				std::cout << mark;
 			}
@@ -180,19 +196,19 @@ Deanery::Deanery() {
 }
 
 Deanery::~Deanery() {
-	std::cout << "Деканат расформирован" << '\n';
+	std::cout << "The deanery has been disbanded" << '\n';
 	for (auto temp : groups) {
 		delete temp.second;
 	}
 }
 
-Group* Deanery::findGroup(std::string _title){
+Group* Deanery::findGroup(std::string _title) {
 	if (groups.count(_title) == 0)return nullptr;
 	return groups[_title];
 }
 
-std::vector<std::string> Deanery::getGroupTitles() const{
-	std::vector<std::string>list;
+std::vector<std::string> Deanery::getGroupTitles() const {
+	std::vector<std::string> list;
 	for (auto temp : groups) {
 		list.push_back(temp.first);
 	}
@@ -202,8 +218,7 @@ std::vector<std::string> Deanery::getGroupTitles() const{
 void Deanery::addGroup(Group* group, bool force) {
 	if (groups.count(group->title) == 0) {
 		groups[group->title] = group;
-	}
-	else if (force && groups[group->title] != group) {
+	} else if (force && groups[group->title] != group) {
 		delete groups[group->title];
 		groups[group->title] = group;
 	}

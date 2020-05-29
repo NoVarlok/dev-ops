@@ -1,3 +1,6 @@
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
 #include "Student.h"
 #include "Group.h"
 #include <iostream>
@@ -13,7 +16,7 @@ Student::Student(int _id, std::string _fio, Group* _group) {
 }
 
 Student::~Student() {
-	std::cout << id << " " << fio << " " << "отчислен(-а)" << '\n';
+	std::cout << id << " " << fio << " " << "is expelled" << '\n';
 }
 
 void  Student::addToGroup(Group* _group) {

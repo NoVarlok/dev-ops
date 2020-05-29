@@ -1,19 +1,21 @@
-#ifndef GROUP_H
-#define GROUP_H
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
+#pragma once
 
 #include <string>
 #include <vector>
+#include <utility>
 #include "Student.h"
 #include "Group.h"
 
-class Group
-{
+class Group{
 	std::string title, spec;
 	std::vector<Student*>students;
 	Student* head;
 
-public:
-	Group(std::string _title, std::string _spec = "Undefined");
+ public:
+	explicit Group(std::string _title, std::string _spec = "Undefined");
 	~Group();
 	void addStudent(Student* _student);
 	void chooseHead();
@@ -24,8 +26,6 @@ public:
 	std::string getSpec() const;
 	Student* getHead() const;
 	int getGroupSize() const;
-	std::vector<std::pair<int, std::string>>getStudentsList() const;
+	std::vector<std::pair<int, std::string>> getStudentsList() const;
 	friend class Deanery;
 };
-
-#endif // !GROUP_H

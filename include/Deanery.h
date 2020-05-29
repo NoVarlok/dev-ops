@@ -1,5 +1,7 @@
-#ifndef DEANERY_H
-#define DEANERY_H
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
+#pragma once
 
 #include <vector>
 #include <map>
@@ -7,19 +9,17 @@
 #include "Group.h"
 #include "Student.h"
 
-class Deanery
-{
+class Deanery{
 	std::map<std::string, Group*>groups;
-
-public:
+ public:
 	void loadGroupsFromFile(std::string _filename);
 	void loadStudentsFromFile(std::string _filename);
-	void addRandomMarks(int _number=1);
+	void addRandomMarks(int _number = 1);
 	void addGroup(Group* _group, bool force = false);
 	void getStatistics() const;
 	int getSize() const;
 	void transfer(Student* _student, Group* _from, Group* _to);
-	void dismissal(int _number=3);
+	void dismissal(int _number = 3);
 	void saveToFile(std::string _filename);
 	void chooseHeads();
 	void print();
@@ -29,4 +29,3 @@ public:
 	~Deanery();
 };
 
-#endif // !DEANERY_H

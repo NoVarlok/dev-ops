@@ -1,17 +1,19 @@
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
 #include "Group.h"
 #include <iostream>
+#include <random>
 #include <boost/program_options.hpp>
 
-//#include <stdexcept>
 
 Group::Group(std::string _title, std::string _spec) {
 	title = _title;
 	spec = _spec;
-	
 }
 
 Group::~Group() {
-	std::cout << "Группа " << title << " " << spec << " расформирована" << "\n";
+	std::cout << "Group " << title << " " << spec << " is disbanded" << "\n";
 	for (Student* student : students) {
 		delete student;
 	}
@@ -25,7 +27,8 @@ void Group::addStudent(Student* _student) {
 void Group::chooseHead() {
 	head = nullptr;
 	if (students.size()) {
-		int headIndex = rand() % students.size();
+		unsigned int temp = 10000;
+		int headIndex = rand_r(&temp) % students.size();
 		head = students[headIndex];
 	}
 }
@@ -67,11 +70,11 @@ void Group::deduct(Student* _student, Group* _transferGroup) {
 	}
 }
 
-std::string Group::getTitle() const{
+std::string Group::getTitle() const {
 	return title;
 }
 
-std::string Group::getSpec() const{
+std::string Group::getSpec() const {
 	return spec;
 }
 
@@ -79,13 +82,13 @@ Student* Group::getHead() const {
 	return head;
 }
 
-int Group::getGroupSize() const{
+int Group::getGroupSize() const {
 	return students.size();
 }
 
 std::vector<std::pair<int, std::string>> Group::getStudentsList() const {
-	std::vector<std::pair<int, std::string>>list;
-	for (Student* student:students) {
+	std::vector<std::pair<int, std::string>> list;
+	for (Student* student : students) {
 		list.push_back({ student->id, student->fio });
 	}
 	return list;

@@ -1,3 +1,6 @@
+/* Copyright (C) 2020 Leonid Yakhtin - All Rights Reserved
+ */
+
 #define CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -6,17 +9,15 @@
 #include <vector>
 #include <map>
 #include <iomanip>
-//#include <filesystem>
 #include "Deanery.h"
 #include "Student.h"
 #include "Group.h"
-using namespace std;
+
+using std::cout;
 
 int main() {
 	system("chcp 1251");
-	//cout << filesystem::current_path() << '\n';
 	Deanery dean;
-	//dean.loadGroupsFromFile("group_input.txt");
 	dean.loadStudentsFromFile("/input_data/student_input.txt");
 	dean.chooseHeads();
 	dean.addRandomMarks(3);
@@ -30,19 +31,20 @@ int main() {
 	cout << std::endl;
 	Group* from = dean.findGroup(list[0]);
 	Group* to = dean.findGroup(list[1]);
-	cout << from->getTitle() << " " << from->getSpec() << std::endl<<std::endl;
-	cout << to->getTitle() << " " << to->getSpec() << std::endl<<std::endl;
-	std::vector < std::pair<int, std::string>>fromlist = from->getStudentsList();
+	cout << from->getTitle() << " " << from->getSpec() << std::endl << std::endl;
+	cout << to->getTitle() << " " << to->getSpec() << std::endl << std::endl;
+	std::vector < std::pair<int, std::string>> fromlist = from->getStudentsList();
 	for (auto t : fromlist) {
 		cout << "(" << t.first << ", " << t.second << "), ";
 	}
 	cout << std::endl;
-	std::vector < std::pair<int, std::string>>tolist = to->getStudentsList();
+	std::vector < std::pair<int, std::string>> tolist = to->getStudentsList();
 	for (auto t : tolist) {
 		cout << "(" << t.first << ", " << t.second << "), ";
 	}
 	cout << std::endl;
-	dean.transfer(from->findStudent(fromlist[0].first, fromlist[0].second), from, to);
+	dean.transfer(from->findStudent(fromlist[0].first,
+					fromlist[0].second), from, to);
 	fromlist = from->getStudentsList();
 	tolist = to->getStudentsList();
 	for (auto t : fromlist) {
