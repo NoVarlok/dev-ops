@@ -65,10 +65,10 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
           docker pull 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER
-          docker run -v /home/ubuntu/actions-runner/work_dir/dev-ops/dev-ops/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER > output.txt
+          docker run -v /home/ubuntu/actions-runner/work_dir/dev-ops/dev-ops/input_data:/input_data --name mounted_$GITHUB_RUN_NUMBER 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER > artifact_output.txt
       - name: artifacts
         uses: actions/upload-artifact@v1
         with:  
           name: result
-          path: output.txt
+          path: artifact_output.txt
     
