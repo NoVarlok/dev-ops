@@ -16,6 +16,7 @@ jobs:
     # - name: dir
     - uses: actions/checkout@v2
     - run: echo $PWD
+    - run: cat /etc/os-release
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -49,6 +50,8 @@ jobs:
     # runs-on: potato
     steps:
     - uses: actions/checkout@v2
+    - name: check_host
+      run: cat /etc/os-release
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - name: run
@@ -63,6 +66,8 @@ jobs:
     runs-on: potato
     steps:
       - uses: actions/checkout@v2
+      - name: check_host
+        run: cat /etc/os-release
       - name: local_docker
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
