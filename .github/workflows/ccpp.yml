@@ -16,7 +16,7 @@ jobs:
     # - name: dir
     - uses: actions/checkout@v2
     - run: echo $PWD
-    - name: Set up Python ${{ matrix.python-version }}
+#    - name: Set up Python ${{ matrix.python-version }}
 #       uses: actions/setup-python@v1
 #       with:
 #         python-version: '3.8'
