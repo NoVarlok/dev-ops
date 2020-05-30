@@ -7,33 +7,33 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  testing:
     #runs-on: ubuntu-latest'
     runs-on: self-hosted
 
     steps:
     # - name: dir
     - uses: actions/checkout@v2
-    # - run: echo $PWD
-#    - name: Set up Python ${{ matrix.python-version }}
-#       uses: actions/setup-python@v1
-#       with:
-#         python-version: '3.7.4'
-#      - name: Install dependencies for code stype check
-#        run: |
-#          python -m pip install --upgrade pip
-#          pip install cpplint
-#     - name: code style check
-#       run: |
-#         python -m pip install --upgrade pip
-#         pip install cpplint
-#         cpplint --verbose=2 include/Deanery.h
-#         cpplint --verbose=2 include/Group.h
-#         cpplint --verbose=2 include/Student.h
-#         cpplint --verbose=2 src/Deanery.cpp
-#         cpplint --verbose=2 src/Group.cpp
-#         cpplint --verbose=2 src/Student.cpp
-#         cpplint --verbose=2 src/main.cpp
+    - run: echo $PWD
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7.4'
+    - name: Install dependencies for code stype check
+      run: |
+         python -m pip install --upgrade pip
+         pip install cpplint
+    - name: code style check
+      run: |
+        python -m pip install --upgrade pip
+        pip install cpplint
+        cpplint --verbose=2 include/Deanery.h
+        cpplint --verbose=2 include/Group.h
+        cpplint --verbose=2 include/Student.h
+        cpplint --verbose=2 src/Deanery.cpp
+        cpplint --verbose=2 src/Group.cpp
+        cpplint --verbose=2 src/Student.cpp
+        cpplint --verbose=2 src/main.cpp
     - name: tests
       run: |
         cp -r ./include ./docker_test/include
@@ -41,6 +41,10 @@ jobs:
         cd docker_test
         docker build -t tests .
         cd ..
+        
+  build: 
+    runs-on: self-hosted
+    steps:
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - name: run
