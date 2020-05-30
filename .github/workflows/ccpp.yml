@@ -8,8 +8,8 @@ on:
 
 jobs:
   testing:
-    #runs-on: ubuntu-latest'
-    runs-on: self-hosted
+    runs-on: ubuntu-latest'
+    #runs-on: self-hosted
 
     steps:
     # - name: dir
@@ -43,7 +43,7 @@ jobs:
         cd ..
         
   build: 
-    runs-on: self-hosted
+    runs-on: ubuntu:latest
     steps:
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
