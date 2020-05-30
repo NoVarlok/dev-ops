@@ -58,7 +58,7 @@ jobs:
   
   download_artifacts:
     needs: build
-    runs-on: self-hosted
+    runs-on: potato
     steps:
       - uses: actions/checkout@v2
       - name: local_docker
