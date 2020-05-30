@@ -14,7 +14,7 @@ jobs:
     steps:
     # - name: dir
     - uses: actions/checkout@v2
-    - run: echo $PWD
+    # - run: echo $PWD
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
