@@ -17,10 +17,10 @@ jobs:
     - uses: actions/checkout@v2
     - run: echo $PWD
     - run: cat /etc/os-release
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.8.2'
+    #- name: Set up Python ${{ matrix.python-version }}
+    #  uses: actions/setup-python@v1
+    #  with:
+    #    python-version: '3.8.2'
     - name: Install dependencies for code stype check
       run: |
          python -m pip install --upgrade pip
