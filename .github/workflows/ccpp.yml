@@ -8,9 +8,9 @@ on:
 
 jobs:
   testing:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
     #runs-on: potato
-    #runs-on: self-hosted
+    runs-on: self-hosted
 
     steps:
     # - name: dir
@@ -20,7 +20,7 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
+        python-version: '3.8.2'
     - name: Install dependencies for code stype check
       run: |
          python -m pip install --upgrade pip
@@ -46,7 +46,8 @@ jobs:
         
   build: 
     needs: testing
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: self-hosted
     # runs-on: potato
     steps:
     - uses: actions/checkout@v2
@@ -63,7 +64,7 @@ jobs:
   
   download_artifacts:
     needs: build
-    runs-on: potato
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: check_host
@@ -72,7 +73,7 @@ jobs:
         run: |
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
           docker pull 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER
-          docker run -v /home/ubuntu/actions-runner/work_dir/dev-ops/dev-ops/input_data:/input_data --name mounted_$GITHUB_RUN_NUMBER 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER > artifact_output.txt
+          docker run -v /home/leonid/devops/actions-runner/workdir/dev-ops/dev-ops/input_data:/input_data --name mounted_$GITHUB_RUN_NUMBER 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER > artifact_output.txt
       - name: artifacts
         uses: actions/upload-artifact@v1
         with:  
