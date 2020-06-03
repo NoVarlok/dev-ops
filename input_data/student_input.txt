@@ -7,4 +7,4 @@
 07;Arseniy Mironovich Gerasimov;18-pmi;pmi;
 08;Yakushev Valentin Makarovich;18-pi;pi;
 09;Blokhin Nelly Efimovich;18-bi;bi;
-10;Yaroslav Nikitovich Shiryaev;18-bi;bi;
+10;Yaroslav Nikitovich Shiryaev;18-a;a;

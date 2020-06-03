@@ -1,4 +1,4 @@
-name: BlessRNG
+name: custom_runner
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  testing:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +20,12 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies for code stype check
       run: |
-        python -m pip install --upgrade pip
-        pip install cpplint
+         python -m pip install --upgrade pip
+         pip install cpplint
     - name: code style check
       run: |
+        python -m pip install --upgrade pip
+        pip install cpplint
         cpplint --verbose=2 include/Deanery.h
         cpplint --verbose=2 include/Group.h
         cpplint --verbose=2 include/Student.h
@@ -39,11 +40,33 @@ jobs:
         cd docker_test
         docker build -t tests .
         cd ..
+        
+  build: 
+    needs: testing
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: build
       run: docker build -t 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER .
     - name: run
-      run: docker run -v /home/runner/work/devops-18pi-NoVarlok/devops-18pi-NoVarlok/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
+      run: docker run -v $PWD/input_data:/input_data --name mounted 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER 
     - name: upload
       run: |
         docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
         docker push 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER
+  
+  download_artifacts:
+    needs: build
+    runs-on: potato
+    steps:
+      - uses: actions/checkout@v2
+      - name: local_docker
+        run: |
+          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
+          docker pull 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER
+          docker run -v /home/ubuntu/actions-runner/work_dir/dev-ops/dev-ops/input_data:/input_data --name mounted_$GITHUB_RUN_NUMBER 1205200012052000/hse_devops_deanery:ver_$GITHUB_RUN_NUMBER > artifact_output.txt
+      - name: artifacts
+        uses: actions/upload-artifact@v1
+        with:  
+          name: result
+          path: artifact_output.txt
