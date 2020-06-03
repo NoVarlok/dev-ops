@@ -7,4 +7,14 @@
 07;Arseniy Mironovich Gerasimov;18-pmi;pmi;
 08;Yakushev Valentin Makarovich;18-pi;pi;
 09;Blokhin Nelly Efimovich;18-bi;bi;
-10;Yaroslav Nikitovich Shiryaev;18-bi;bi;
+10;Yaroslav Nikitovich Shiryaev;18-a;a;
+11;Norris Abram Robertovich;18-a;a;
+12;Norris Oleg Borisovich;18-a;a;
+13;Norris Willie Parfenovich;18-a;a;
+14;Norris Igor Bogdanovich;18-a;a;
+15;Norris Khariton Nikolaevich;18-a;a;
+16;Norris David Efimovich;18-a;a;
+17;Norris Mironovich Gerasimov;18-a;a;
+18;Norris Valentin Makarovich;18-a;a;
+19;Norris Nelly Efimovich;18-bi;bi;
+20;Norris Nikitovich Shiryaev;18-bi;bi;
